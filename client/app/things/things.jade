@@ -2,7 +2,10 @@ div(ng-include='"components/navbar/navbar.html"')
 .con(ng-controller='ThingsCtrl')
   ul
     li(ng-repeat="thing in things") 
-      {{thing.name }}
+      a(href= '/') {{thing.name}} : {{thing.votes}}
+      button.btn.btn-success(onclick = 'upvote(thing)') ^ 
+      button.btn.btn-danger(onclick = 'downvote(thing)') v
+
   .thingscontainer
     #things
 
