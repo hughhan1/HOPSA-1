@@ -50,7 +50,7 @@ angular.module('hophacksApp')
      });
       map.addListener('click', function(event) {
         $scope.latLng = event.latLng
-        var modal = $modal.open({
+        $scope.modal = $modal.open({
           templateUrl: 'components/modal/modal.html',
           windowClass: 'modal-primary',
           scope: $scope
