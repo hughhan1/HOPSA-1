@@ -4,15 +4,16 @@ div(ng-include='"components/navbar/navbar.html"')
     tr(ng-repeat="thing in things") 
       td(align="left")
         div(class="thing-name-container")
-          a(ng-href="{{getUrl(thing)}}", class="thing-text") {{thing.name}}
+          a(ng-href="{{getUrl(thing)}}") {{thing.name}}
       td(align="right")
-        div(class="count")
+        div(class="thing-votes-container")
           {{thing.votes}}
       td(align="right")
-        div(class="thing-votebuttons-container")
-          div(ng-click="upvote(thing)", class="increment up") &nbsp;
-          div(ng-click="downvote(thing)", class="increment down") &nbsp;
-
+        div(class="thing-votebuttons-container vote roundrect")
+          button.btn.btn-success(ng-click="upvote(thing)", class="increment up") ^ 
+          button.btn.btn-danger(ng-click="downvote(thing)", class="increment down") v
+          div(class="count")
+          
 footer.footer
   .container
     p
