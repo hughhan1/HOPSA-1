@@ -12,7 +12,18 @@ angular.module('hophacksApp')
     });
 
     $scope.upvote = function(thing) {
-    	thing.votes++;
+    	var currVotes = thing[Auth.getCurrentUser()];
+    	if (currVotes == -1) {
+    		thing.votes = thing.votes + 1;
+    		thing[Auth.getCurrentUser()] = 0; 
+    	}
+    	else if (currVotes == 0 || currVotes == null) {
+    		thing.votes++;
+    		thing[Auth.getCurrentUser()] = 1
+    	} 	
+    	else {
+    		console.log("You cannot upvote twice.")
+    	}
     	$http.put('/api/things/' + thing._id, thing).success(function(data) {
     		// Refresh the page
     		console.log('Upvoted event successfully');
@@ -20,15 +31,27 @@ angular.module('hophacksApp')
     }
 
     $scope.downvote = function(thing) {
-    	thing.votes--;
+    	//thing.votes--;
+    	var currVotes = thing[Auth.getCurrentUser()];
+    	if (currVotes == 1) {
+    		thing.votes = thing.votes - 1;
+    		thing[Auth.getCurrentUser()] = 0; 
+    	}
+    	else if (currVotes == 0 || currVotes == null) {
+    		thing.votes--;
+    		thing[Auth.getCurrentUser()] = -1
+    	} 	
+    	else {
+    		console.log("You cannot downvote twice.")
+    	}
     	$http.put('/api/things/' + thing._id, thing).success(function(data) {
     		// Refresh the page
-    		console.log('Upvoted event successfully');
+    		console.log('Downvote event successfully');
     	});
     }
 
     $scope.delete = function(thing) {
-    	if (thing.user == Auth.currentUser()) {
+    	if (thing.user == Auth.getCurrentUser()) {
     		$http.delete('/api/things/' + thing._id).success(function(data) {
     			// Refresh the page
     			console.log('Deleted event successfully');
