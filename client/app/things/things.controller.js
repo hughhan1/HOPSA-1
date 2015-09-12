@@ -2,9 +2,11 @@
 
 angular.module('hophacksApp')
   .controller('ThingsCtrl', function ($rootScope, Modal, $modal, $scope, $http) {
-  	$scope.things;
+  	$scope.things = [];
   	$http.get('/api/things/').success(function(data) {
-      $scope.things = data;
+  		data.forEach(function(thing) {
+  			$scope.things.push(thing);
+  		})
       console.log('Got all the things!');
     })
 	});
