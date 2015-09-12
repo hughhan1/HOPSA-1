@@ -11,6 +11,11 @@ angular.module('hophacksApp')
       console.log('Got all the things!');
     });
 
+    $scope.getUrl = function(thing) {
+    	console.log('things/' + thing._id);
+    	return 'things/' + thing._id;
+    }
+
     $scope.upvote = function(thing) {
     	if (Auth.isLoggedIn()) {
 	    	var currVotes = thing[Auth.getCurrentUser()];
