@@ -2,9 +2,9 @@
 
 angular.module('hophacksApp')
   .controller('ThingsCtrl', function ($rootScope, Modal, $modal, $scope, $http) {
-  	$scope.list = function() {
-      $http.get('/api/things/', event).success(function(data) {
-        console.log('Got all the things!');
-      })
-  	}
-});
+  	$scope.things;
+  	$http.get('/api/things/').success(function(data) {
+      $scope.things = data;
+      console.log('Got all the things!');
+    })
+	});
