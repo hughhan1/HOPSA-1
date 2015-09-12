@@ -3,8 +3,12 @@
 angular.module('hophacksApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
-      'title': 'Home',
+      'title': 'Map',
       'link': '/'
+    }, 
+    {
+      'title': 'List',
+      'link': '/things'
     }];
 
     $scope.isCollapsed = true;
