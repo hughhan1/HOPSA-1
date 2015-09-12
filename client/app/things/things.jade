@@ -4,7 +4,10 @@ div(ng-include='"components/navbar/navbar.html"')
     tr(ng-repeat="thing in things") 
       td(align="left")
         div(class="thing-name-container")
-          a(ng-href="{{getUrl(thing)}}", class="thing-text") {{thing.name}}
+          a(ng-href="{{getUrl(thing)}}", class="thing-text", style="white-space:pre;") 
+            {{thing.name}} 
+          br
+          {{thing.desc}}
       td(align="right")
         div(class="count")
           {{thing.votes}}
