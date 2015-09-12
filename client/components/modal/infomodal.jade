@@ -20,6 +20,6 @@ div(ng-controller='MainCtrl')
             p Hosts:&nbsp;  
           td 
             p {{ modalEvent.host }}
-  .modal-footer
-    button.btn.btn-success Upvote
-    button.btn.btn-danger Downvote
+  .modal-footer(ng-controller='ThingsCtrl')
+    button.btn.btn-success(ng-click='upvote(modalEvent)') Upvote
+    button.btn.btn-danger(ng-click='downvote(modalEvent)') Downvote

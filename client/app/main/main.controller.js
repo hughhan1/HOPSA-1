@@ -11,6 +11,7 @@ angular.module('hophacksApp')
       var marker = new google.maps.Marker({
         position: event.latLng,
         map: map,
+        _id: event._id,
         name: event.name,
         desc: event.desc,
         host: event.host,
@@ -26,7 +27,7 @@ angular.module('hophacksApp')
           size: 'sm',
           resolve: {
             event: function() {
-              return that
+              return that._id
             }
           }
         });
@@ -45,9 +46,10 @@ angular.module('hophacksApp')
         lat: $scope.latLng.lat(),
         lng: $scope.latLng.lng()
       };
-      createMarker(event);
       $http.post('/api/things/', event).success(function(data) {
-        console.log('Posted event to mongodb successfully');
+        event._id = data._id;
+        createMarker(event);
+        console.log(event)
       });
       markers.push(event)
     }
@@ -98,8 +100,10 @@ angular.module('hophacksApp').controller('ModalAddCtrl', function ($scope, $moda
   };
 });
 
-angular.module('hophacksApp').controller('ModalInfoCtrl', function (event, $scope, $modalInstance) {
-  $scope.modalEvent = event;
+angular.module('hophacksApp').controller('ModalInfoCtrl', function ($http, event, $scope, $modalInstance) {
+  $http.get('/api/things/' + event).success(function(data) {
+    $scope.modalEvent = data
+  })
   $scope.send = function () {
     $modalInstance.close($scope.modalEvent);
   };
