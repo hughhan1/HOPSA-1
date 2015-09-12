@@ -1,7 +1,8 @@
 div(ng-include='"components/navbar/navbar.html"')
 .con(ng-controller='ThingsCtrl')
-  .div(ng-repeat="thing in things")
-  	{{ thing.name }}
+  ul
+    li(ng-repeat="thing in things") 
+      a(href= '/') {{thing.name }}
   .thingscontainer
     #things
 
