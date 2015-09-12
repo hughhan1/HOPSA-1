@@ -13,7 +13,7 @@ var ThingSchema = new Schema({
     default: 0
   },
   voted: [{
-    user: Object,
+    userId: String,
     vote: Number
   }],
   user: Object
