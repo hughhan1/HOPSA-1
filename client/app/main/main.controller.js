@@ -77,41 +77,13 @@ angular.module('hophacksApp')
         lat: $scope.latLng.lat(),
         lng: $scope.latLng.lng()
       };
-      if (Auth.isLoggedIn()) {
-        console.log("Is logged in")
-
-     // var location_timeout = setTimeout("geolocFail()", 10000);
-        if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition( function(position) {
-          console.log(google.maps.geometry.spherical.computeDistanceBetween(
-          new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 
-          new google.maps.LatLng(event.latLng.lat, event.latLng.lng)))
-
-          if (google.maps.geometry.spherical.computeDistanceBetween(
-          new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 
-          new google.maps.LatLng(event.latLng.lat, event.latLng.lng)) < 150){
-            $http.post('/api/things/', event).success(function(data) {
-            event._id = data._id;
-            createMarker(event)
-            console.log(event)
-            });
-            markers.push(event)
-          }
-        else {
-          console.log("Distance invalid")
-          $window.alert("You must be closer to the location to create it.")
-        }
-        }, function error(err) {alert('Please enable your GPS.')}, {enableHighAccuracy: true});
-      }
-      else {
-       console.log("No geolocation")
-      }
+        $http.post('/api/things/', event).success(function(data) {
+        event._id = data._id;
+        createMarker(event)
+        console.log(event)
+        });
+        markers.push(event)
     }
-    else {
-      console.log("Not logged in")
-      $window.alert("You must be logged in to create an event.")
-    }
-  }
       /*  $http.post('/api/things/', event).success(function(data) {
           console.log('Posted event to mongodb successfully');
         });
@@ -131,24 +103,51 @@ angular.module('hophacksApp')
      });
       map.addListener('click', function(event) {
         $scope.latLng = event.latLng
-        var addModal = $modal.open({
-          templateUrl: 'components/modal/modal.html',
-          windowClass: 'modal-primary',
-          controller: 'ModalAddCtrl',
-          size: 'sm'
-        });
+        if (Auth.isLoggedIn()) {
+          console.log("Is logged in")
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition( function(position) {
+              
+              console.log(google.maps.geometry.spherical.computeDistanceBetween(
+              new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 
+              new google.maps.LatLng(coords.lat(), coords.lng())))
 
-        addModal.result.then(function(data) {
-          $scope.add(data)
-        })
-      })
+            if (google.maps.geometry.spherical.computeDistanceBetween(
+              new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 
+              new google.maps.LatLng(coords.lat(), coords.lng()))< 50) {
+              
+              var addModal = $modal.open({
+            templateUrl: 'components/modal/modal.html',
+            windowClass: 'modal-primary',
+            controller: 'ModalAddCtrl',
+            size: 'sm'
+            });
+
+            addModal.result.then(function(data) {
+            $scope.add(data)
+            });
+            }
+            else {
+              console.log("Distance invalid")
+              $window.alert("You must be closer to the location to create it.")
+            }}, function error(err) {alert('Please enable your GPS.')}, {enableHighAccuracy: true});
+          }
+          else {
+            console.log("No geolocation")
+          }
+        }
+        else {
+          console.log("Not logged in")
+          $window.alert("You must be logged in to create an event.")
+        }
+      });
      $http.get('/api/things/').success(function(data) {
       data.forEach(function(mark) {
         markers.push(mark)
         createMarker(mark)
       })
      })
-   } 
+   }
   if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -158,6 +157,7 @@ angular.module('hophacksApp')
   } else {
   }
 });
+
 
 angular.module('hophacksApp').controller('ModalAddCtrl', function ($scope, $modalInstance) {
   $scope.modalEvent = {};
