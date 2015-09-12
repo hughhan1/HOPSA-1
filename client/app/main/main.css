@@ -7,12 +7,18 @@
     margin-top: -20px;
 }
 
+input {
+    width: 100%;
+}
+
+th {
+    padding-bottom: 5px;
+}
 .mapcontainer {
-    width: 95vw;
+    margin-top: -20px;
+    width: 100vw;
     height: 100vh;
     padding: 0;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 #map {
@@ -44,6 +50,10 @@
     border-top: 1px solid #E5E5E5;
 }
 
+.navbar {
+    background-color: #86C8BC;
+    color: #050505;
+}
 .navbar-text {
     margin-left: 15px;
 }
