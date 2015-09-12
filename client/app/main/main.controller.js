@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hophacksApp')
-  .controller('MainCtrl', function ($rootScope, Modal, $modal, $scope, $http) {
+  .controller('MainCtrl', function ($rootScope, Modal, $modal, $scope, $http, Auth) {
    var map; 
    var markers = [];
    var infowindow = new google.maps.InfoWindow(); 
@@ -20,7 +20,9 @@ angular.module('hophacksApp')
         map: map,
         name: event.name,
         desc: event.desc,
-        host: event.host
+        host: event.host,
+        votes: 0,
+        user: Auth.getCurrentUser()
       });
       marker.addListener('click', function() {
         infowindow.setContent(marker.name + '\n' + marker.desc);
@@ -34,12 +36,11 @@ angular.module('hophacksApp')
       event.latLng = {
         lat: $scope.latLng.lat(),
         lng: $scope.latLng.lng()
-
-      }
-      createMarker(event)
+      };
+      createMarker(event);
       $http.post('/api/things/', event).success(function(data) {
-        console.log('Posted event to mongodb successfully')
-      })
+        console.log('Posted event to mongodb successfully');
+      });
       markers.push(event)
     }
   

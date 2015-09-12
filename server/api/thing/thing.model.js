@@ -7,7 +7,9 @@ var ThingSchema = new Schema({
   name: String,
   desc: String,
   host: String,
-  latLng: Object
+  latLng: Object,
+  votes: Number,
+  user: Object
 });
 
 module.exports = mongoose.model('Thing', ThingSchema);
