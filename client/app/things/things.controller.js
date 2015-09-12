@@ -30,9 +30,9 @@ angular.module('hophacksApp')
     $scope.delete = function(thing) {
     	if (thing.user == Auth.currentUser()) {
     		$http.delete('/api/things/' + thing._id).success(function(data) {
-    		// Refresh the page
-    		console.log('Deleted event successfully');
-    	});
-    }
-
-	});
+    			// Refresh the page
+    			console.log('Deleted event successfully');
+    		});
+    	}
+  	}
+  });

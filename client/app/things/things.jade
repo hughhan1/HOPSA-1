@@ -2,7 +2,7 @@ div(ng-include='"components/navbar/navbar.html"')
 .con(ng-controller='ThingsCtrl')
   ul
     li(ng-repeat="thing in things") 
-      a(href= '/') {{thing.name }}
+      {{thing.name }}
   .thingscontainer
     #things
 
