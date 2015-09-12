@@ -10,5 +10,9 @@ angular.module('hophacksApp')
       .when('/things', {
         templateUrl: 'app/things/things.html',
         controller: 'ThingsCtrl'
+      })
+      .when('things/:thingId', {
+        templateUrl: 'app/things/thing.html',
+        controller: 'ThingsCtrl'
       });
   });

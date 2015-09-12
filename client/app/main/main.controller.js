@@ -6,34 +6,39 @@ angular.module('hophacksApp')
    var markers = [];
    var infowindow = new google.maps.InfoWindow();
 
-  var marker = new google.maps.Marker({
-    position: { lng: -76.62033677101135,
-                lat: 39.3274509678524},
-    map: map,
-    name: 'test'
-  });
-
    function createMarker(event) {
-
-        var marker = new google.maps.Marker({
+      var marker = new google.maps.Marker({
         position: event.latLng,
         map: map,
+        _id: event._id,
         name: event.name,
         desc: event.desc,
         host: event.host,
         votes: 0,
-        user: Auth.getCurrentUser(),
-        votedUsers: []
-       });
-        marker.addListener('click', function() {
+        user: Auth.getCurrentUser()
+      });
+      marker.addListener('click', function() {
+        var that = this;
+        var infoModal = $modal.open({
+          templateUrl: 'components/modal/infomodal.html',
+          windowClass: 'modal-success',
+          controller: 'ModalInfoCtrl',
+          size: 'sm',
+          resolve: {
+            event: function() {
+              return that._id
+            }
+          }
+        });
+
+        infoModal.result.then(function(data) {
+          $scope.add(data)
+        })
+
         infowindow.setContent(marker.name + '\n' + marker.desc);
         infowindow.open(map, this);
-        });
-        $http.post('/api/things/', event).success(function(data) {
-          console.log('Posted event to mongodb successfully');
-        });
-        markers.push(event)
-}
+      });
+   }
 
   /*    if (google.maps.geometry.spherical.computeDistanceBetween(event.latLng, navigator.geolocation.getCurrentPosition($scope.showPosition,$scope.showError,{timeout:10000}).latLng) < 300){
         console.log("Distance valid")
@@ -68,8 +73,6 @@ angular.module('hophacksApp')
   }*/
 
     $scope.add = function(event) {
-      $scope.modal.close()
-      $scope.modal = null;
       event.latLng = {
         lat: $scope.latLng.lat(),
         lng: $scope.latLng.lng()
@@ -87,7 +90,12 @@ angular.module('hophacksApp')
           if (google.maps.geometry.spherical.computeDistanceBetween(
           new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 
           new google.maps.LatLng(event.latLng.lat, event.latLng.lng)) < 150){
+            $http.post('/api/things/', event).success(function(data) {
+            event._id = data._id;
             createMarker(event)
+            console.log(event)
+            });
+            markers.push(event)
           }
         else {
           console.log("Distance invalid")
@@ -103,11 +111,18 @@ angular.module('hophacksApp')
       console.log("Not logged in")
       $window.alert("You must be logged in to create an event.")
     }
+  }
       /*  $http.post('/api/things/', event).success(function(data) {
           console.log('Posted event to mongodb successfully');
         });
         markers.push(event) */
-    }
+   /*   $http.post('/api/things/', event).success(function(data) {
+        event._id = data._id;
+        createMarker(event);
+        console.log(event)
+      });
+      markers.push(event)
+    }*/
   
    function makeMap(coords) {
      map = new google.maps.Map(document.getElementById('map'), {
@@ -116,11 +131,16 @@ angular.module('hophacksApp')
      });
       map.addListener('click', function(event) {
         $scope.latLng = event.latLng
-        $scope.modal = $modal.open({
+        var addModal = $modal.open({
           templateUrl: 'components/modal/modal.html',
           windowClass: 'modal-primary',
-          scope: $scope
+          controller: 'ModalAddCtrl',
+          size: 'sm'
         });
+
+        addModal.result.then(function(data) {
+          $scope.add(data)
+        })
       })
      $http.get('/api/things/').success(function(data) {
       data.forEach(function(mark) {
@@ -137,4 +157,28 @@ angular.module('hophacksApp')
       });
   } else {
   }
+});
+
+angular.module('hophacksApp').controller('ModalAddCtrl', function ($scope, $modalInstance) {
+  $scope.modalEvent = {};
+  $scope.send = function () {
+    $modalInstance.close($scope.modalEvent);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('hophacksApp').controller('ModalInfoCtrl', function ($http, event, $scope, $modalInstance) {
+  $http.get('/api/things/' + event).success(function(data) {
+    $scope.modalEvent = data
+  })
+  $scope.send = function () {
+    $modalInstance.close($scope.modalEvent);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
 });

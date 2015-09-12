@@ -1,13 +1,17 @@
 div(ng-include='"components/navbar/navbar.html"')
 .con(ng-controller='ThingsCtrl')
-  ul
-    li(ng-repeat="thing in things") 
-      a(href= '/') {{thing.name}} : {{thing.votes}}
-      button.btn.btn-success(ng-click = 'upvote(thing)') ^ 
-      button.btn.btn-danger(ng-click = 'downvote(thing)') v
-
-  .thingscontainer
-    #things
+  table(class="things-container")
+    tr(ng-repeat="thing in things") 
+      td(align="left")
+        div(class="thing-name-container")
+          a(ng-href="{{getUrl(thing)}}", class="thing-text") {{thing.name}}
+      td(align="right")
+        div(class="count")
+          {{thing.votes}}
+      td(align="right")
+        div(class="thing-votebuttons-container")
+          div(ng-click="upvote(thing)", class="increment up") &nbsp;
+          div(ng-click="downvote(thing)", class="increment down") &nbsp;
 
 footer.footer
   .container

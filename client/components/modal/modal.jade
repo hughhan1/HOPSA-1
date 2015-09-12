@@ -12,18 +12,18 @@ div(ng-controller='MainCtrl')
             th 
               label Event Name &nbsp;  
             th 
-              input(ng-model='event.name' type="text", placeholder="Frisbee on the quad")
+              input(ng-model='modalEvent.name' type="text", placeholder="Frisbee on the quad")
         tr
           .form-group
             th 
               label Description&nbsp;  
             th 
-              input(ng-model='event.desc' type="textarea", placeholder="What is it about?")
+              input(ng-model='modalEvent.desc' type="textarea", placeholder="What is it about?")
         tr
           .form-group
             th 
               label Hosting Organization&nbsp;  
             th 
-              input(ng-model='event.host' type="textarea", placeholder="Hopkins Wading Team")
+              input(ng-model='modalEvent.host' type="textarea", placeholder="Hopkins Wading Team")
   .modal-footer
-    button.btn(ng-click='add(event)') Add
+    button.btn(ng-click='send(event)') Add
