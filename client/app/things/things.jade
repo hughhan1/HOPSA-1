@@ -3,8 +3,8 @@ div(ng-include='"components/navbar/navbar.html"')
   ul
     li(ng-repeat="thing in things") 
       a(href= '/') {{thing.name}} : {{thing.votes}}
-      button.btn.btn-success(onclick = 'upvote(thing)') ^ 
-      button.btn.btn-danger(onclick = 'downvote(thing)') v
+      button.btn.btn-success(ng-click = 'upvote(thing)') ^ 
+      button.btn.btn-danger(ng-click = 'downvote(thing)') v
 
   .thingscontainer
     #things
