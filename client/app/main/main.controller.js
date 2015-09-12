@@ -7,13 +7,6 @@ angular.module('hophacksApp')
    var infowindow = new google.maps.InfoWindow(); 
 
 
-  var marker = new google.maps.Marker({
-    position: { lng: -76.62033677101135,
-                lat: 39.3274509678524},
-    map: map,
-    name: 'test'
-  });
-
    function createMarker(event) {
       var marker = new google.maps.Marker({
         position: event.latLng,
@@ -25,14 +18,29 @@ angular.module('hophacksApp')
         user: Auth.getCurrentUser()
       });
       marker.addListener('click', function() {
+        var that = this;
+        var infoModal = $modal.open({
+          templateUrl: 'components/modal/infomodal.html',
+          windowClass: 'modal-success',
+          controller: 'ModalInfoCtrl',
+          size: 'sm',
+          resolve: {
+            event: function() {
+              return that
+            }
+          }
+        });
+
+        infoModal.result.then(function(data) {
+          $scope.add(data)
+        })
+
         infowindow.setContent(marker.name + '\n' + marker.desc);
         infowindow.open(map, this);
       });
    }
 
     $scope.add = function(event) {
-      $scope.modal.close()
-      $scope.modal = null;
       event.latLng = {
         lat: $scope.latLng.lat(),
         lng: $scope.latLng.lng()
@@ -51,11 +59,16 @@ angular.module('hophacksApp')
      });
       map.addListener('click', function(event) {
         $scope.latLng = event.latLng
-        $scope.modal = $modal.open({
+        var addModal = $modal.open({
           templateUrl: 'components/modal/modal.html',
           windowClass: 'modal-primary',
-          scope: $scope
+          controller: 'ModalAddCtrl',
+          size: 'sm'
         });
+
+        addModal.result.then(function(data) {
+          $scope.add(data)
+        })
       })
      $http.get('/api/things/').success(function(data) {
       data.forEach(function(mark) {
@@ -72,4 +85,26 @@ angular.module('hophacksApp')
       });
   } else {
   }
+});
+
+angular.module('hophacksApp').controller('ModalAddCtrl', function ($scope, $modalInstance) {
+  $scope.modalEvent = {};
+  $scope.send = function () {
+    $modalInstance.close($scope.modalEvent);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('hophacksApp').controller('ModalInfoCtrl', function (event, $scope, $modalInstance) {
+  $scope.modalEvent = event;
+  $scope.send = function () {
+    $modalInstance.close($scope.modalEvent);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
 });

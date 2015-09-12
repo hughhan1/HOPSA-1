@@ -1,0 +1,25 @@
+div(ng-controller='MainCtrl')
+  .modal-header  
+    button.close(type='button', ng-click='$dismiss()') &times;
+    h4.modal-title Information
+  .modal-body
+    form
+      table
+        tr
+          th 
+            p Event Name:&nbsp;  
+          td 
+            p {{ modalEvent.name }}
+        tr
+          th 
+            p Description:&nbsp;  
+          td 
+            p {{ modalEvent.desc }}
+        tr
+          th 
+            p Hosts:&nbsp;  
+          td 
+            p {{ modalEvent.host }}
+  .modal-footer
+    button.btn.btn-success Upvote
+    button.btn.btn-danger Downvote
