@@ -8,7 +8,10 @@ var ThingSchema = new Schema({
   desc: String,
   host: String,
   latLng: Object,
-  votes: Number,
+  votes: {
+  	type: Number,
+  	default: 0
+  },
   user: Object
 });
 
