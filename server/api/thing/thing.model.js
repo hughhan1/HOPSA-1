@@ -9,9 +9,13 @@ var ThingSchema = new Schema({
   host: String,
   latLng: Object,
   votes: {
-  	type: Number,
-  	default: 0
+    type: Number,
+    default: 0
   },
+  voted: [{
+    user: Object,
+    vote: Number
+  }],
   user: Object
 });
 

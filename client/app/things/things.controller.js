@@ -18,48 +18,60 @@ angular.module('hophacksApp')
 
     $scope.upvote = function(thing) {
     	if (Auth.isLoggedIn()) {
-	    	var currVotes = thing[Auth.getCurrentUser()];
-	    	if (currVotes == -1) {
-	    		thing.votes = thing.votes + 1;
-	    		thing[Auth.getCurrentUser()] = 0; 
-	    	}
-	    	else if (currVotes == 0 || currVotes == null) {
-	    		thing.votes++;
-	    		thing[Auth.getCurrentUser()] = 1
-	    	} 	
-	    	else {
-	    		console.log("You cannot upvote twice.")
-	    	}
-	    	$http.put('/api/things/' + thing._id, thing).success(function(data) {
-	    		// TODO: Refresh the page
-	    		console.log('Upvoted event successfully');
+    		var userAlreadyVoted = false;
+    		thing.voted.forEach(function(userVote) {
+    			if (userVote.user == Auth.getCurrentUser()) {
+    				if (userVote.vote == 1) {
+    					console.log("You cannot upvote twice.");
+    				} else {
+    					userVote.vote++;
+    					thing.votes++;
+    				}
+    				userAlreadyVoted = true;
+    			}
+    		});
+    		if (!userAlreadyVoted) {
+    			thing.voted.push({
+    				user: Auth.getCurrentUser(), 
+    				vote: 1
+    			});
+    			thing.votes++
+    		}
+    		$http.put('/api/things/' + thing._id, thing).success(function(data) {
+	    		console.log('Upvoted event with id' + thing._id + 'successfully');
 	    	});
-	    } else {
-	    	console.log('User must be logged in.');
-	    }
+    	} else {
+    		console.log("User must be logged in.");
+    	}
     }
 
     $scope.downvote = function(thing) {
     	if (Auth.isLoggedIn()) {
-	    	var currVotes = thing[Auth.getCurrentUser()];
-	    	if (currVotes == 1) {
-	    		thing.votes = thing.votes - 1;
-	    		thing[Auth.getCurrentUser()] = 0; 
-	    	}
-	    	else if (currVotes == 0 || currVotes == null) {
-	    		thing.votes--;
-	    		thing[Auth.getCurrentUser()] = -1
-	    	} 	
-	    	else {
-	    		console.log("You cannot downvote twice.")
-	    	}
-	    	$http.put('/api/things/' + thing._id, thing).success(function(data) {
-	    		// TODO: Refresh the page
-	    		console.log('Downvote event successfully');
+    		var userAlreadyVoted = false;
+    		thing.voted.forEach(function(userVote) {
+    			if (userVote.user == Auth.getCurrentUser()) {
+    				if (userVote.vote == -1) {
+    					console.log("You cannot downvote twice.");
+    				} else {
+    					userVote.vote--;
+    					thing.votes--;
+    				}
+    				userAlreadyVoted = true;
+    			}
+    		});
+    		if (!userAlreadyVoted) {
+    			thing.voted.push({
+    				user: Auth.getCurrentUser(), 
+    				vote: -1
+    			});
+    			thing.votes--
+    		}
+    		$http.put('/api/things/' + thing._id, thing).success(function(data) {
+	    		console.log('Downvoted event with id' + thing._id + 'successfully');
 	    	});
-	    } else {
-	    	console.log('User must be logged in.');
-	    }
+    	} else {
+    		console.log("User must be logged in.");
+    	}
     }
 
     $scope.delete = function(thing) {

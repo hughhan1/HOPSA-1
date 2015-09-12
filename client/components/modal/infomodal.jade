@@ -21,5 +21,11 @@ div(ng-controller='MainCtrl')
           td 
             p {{ modalEvent.host }}
   .modal-footer(ng-controller='ThingsCtrl')
-    button.btn.btn-success(ng-click='upvote(modalEvent)') Upvote
-    button.btn.btn-danger(ng-click='downvote(modalEvent)') Downvote
+    table
+      tr
+        td(align="left")
+          div(class="count")
+            {{modalEvent.votes}}
+        td(align="right")
+          div(ng-click='upvote(modalEvent)', class="increment up") &nbsp;
+          div(ng-click='downvote(modalEvent)', class="increment down") &nbsp;

@@ -19,3 +19,9 @@ footer.footer
       | hoPSA
       = ' | '
       HopHacks 2015 <3
+
+script.
+  var $voteUp = $('.up').click(function() {
+    $(this).removeClass('increment');
+    $(this).css('color', 'black');
+  });

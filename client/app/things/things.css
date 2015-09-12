@@ -1,14 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic);
-/* try 50% */
-.roundrect .up {
-  border-radius: 2rem 2rem 0 0;
-}
-.roundrect .down {
-  border-radius: 0 0 2rem 2rem;
-}
-.roundrect .count {
-  border-radius: .5rem .5rem;
-}
 
 .vote {
   display: -webkit-box;
@@ -46,9 +36,6 @@
 .increment.down {
   background: #C15044;
   height: 50%;
-}
-.increment:hover {
-  opacity: 1;
 }
 
 .count {
