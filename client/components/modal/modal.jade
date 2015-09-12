@@ -6,10 +6,10 @@ div(ng-controller='MainCtrl')
     p(ng-if='modal.text', ng-bind='modal.text')
     div(ng-if='modal.html', ng-bind-html='modal.html')
     form
-      table
+      table#inputTable
         tr
           .form-group
-            th 
+            th.inputTd 
               label Event Name &nbsp;  
             th 
               input(ng-model='modalEvent.name' type="text", placeholder="Frisbee on the quad")
