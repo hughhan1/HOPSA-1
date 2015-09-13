@@ -23,22 +23,13 @@ angular.module('hophacksApp')
           templateUrl: 'components/modal/infomodal.html',
           windowClass: 'modal-success',
           controller: 'ModalInfoCtrl',
-          backdrop: 'static',
           size: 'sm',
-          scope:$scope,
           resolve: {
             event: function() {
               return that._id
             }
           }
         });
-
-        infoModal.result.then(function(data) {
-          $scope.add(data)
-        })
-
-        infowindow.setContent(marker.name + '\n' + marker.desc);
-        infowindow.open(map, this); 
       });
    }
 
