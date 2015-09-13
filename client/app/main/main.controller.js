@@ -77,12 +77,12 @@ angular.module('hophacksApp')
         lat: $scope.latLng.lat(),
         lng: $scope.latLng.lng()
       };
-        $http.post('/api/things/', event).success(function(data) {
+      $http.post('/api/things/', event).success(function(data) {
         event._id = data._id;
         createMarker(event)
         console.log(event)
-        });
-        markers.push(event)
+      });
+      markers.push(event)
     }
       /*  $http.post('/api/things/', event).success(function(data) {
           console.log('Posted event to mongodb successfully');
