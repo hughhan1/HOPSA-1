@@ -1,25 +1,12 @@
 div(ng-controller='MainCtrl')
   .modal-header  
     button.close(type='button', ng-click='$dismiss()') &times;
-    h4.modal-title Information
+    h4.modal-title(text-align="center") 
+      {{ modalEvent.name }}
   .modal-body
-    form
-      table
-        tr
-          th 
-            p Event Name:&nbsp;  
-          td 
-            p {{ modalEvent.name }}
-        tr
-          th 
-            p Description:&nbsp;  
-          td 
-            p {{ modalEvent.desc }}
-        tr
-          th 
-            p Hosts:&nbsp;  
-          td 
-            p {{ modalEvent.host }}
+    p Hosted by {{ modalEvent.host }}
+    hr
+    p {{ modalEvent.desc }}
   .modal-footer(ng-controller='ThingsCtrl')
     table
       tr
