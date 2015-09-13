@@ -23,7 +23,6 @@
       -ms-flex: 1 0 0;
           flex: 1 0 0;
   text-align: center;
-  opacity: .5;
   -webkit-transition: 0.3s;
           transition: 0.3s;
   cursor: pointer;
@@ -36,6 +35,16 @@
 .increment.down {
   background: #C15044;
   height: 50%;
+}
+.button-off:hover {
+  opacity: 0.8;
+}
+
+.button-on {
+  opacity: 1;
+}
+.button-off {
+  opacity: 0.5;
 }
 
 .count {
@@ -101,8 +110,11 @@
 .things-container {
     position: center;
     width: 95%;
-    margin: 10px 10px 10px 10px;
-    padding: 10px 10px 10px 10px;
+    margin: 10px ;
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .thing-name-container {

@@ -7,6 +7,11 @@ angular.module('hophacksApp')
   	$http.get('/api/things/').success(function(data) {
   		data.forEach(function(thing) {
   			$scope.things.push(thing);
+  			$scope.things.sort(function(x, y) {
+			    if (x.votes < y.votes) return 1;
+			    if (x.votes > y.votes) return -1;
+			    return 0;
+  			});
   		});
       console.log('Got all the things!');
     });

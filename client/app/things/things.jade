@@ -4,14 +4,20 @@ div(ng-include='"components/navbar/navbar.html"')
     tr(ng-repeat="thing in things") 
       td(align="left")
         div(class="thing-name-container")
-          a(ng-href="{{getUrl(thing)}}", class="thing-text") {{thing.name}}
+          a(ng-href="{{getUrl(thing)}}", class="thing-text") 
+            {{thing.name}} 
+          br
+          {{thing.desc}}
+          br
+          {{thing.startTime.getTime()}}
+          {{thing.endTime.getTime()}}
       td(align="right")
         div(class="count")
           {{thing.votes}}
       td(align="right")
         div(class="thing-votebuttons-container")
-          div(ng-click="upvote(thing)", class="increment up") &nbsp;
-          div(ng-click="downvote(thing)", class="increment down") &nbsp;
+          div(ng-click="upvote(thing)", class="button-off increment up") &nbsp;
+          div(ng-click="downvote(thing)", class="button-off increment down") &nbsp;
 
 footer.footer
   .container
@@ -21,7 +27,10 @@ footer.footer
       HopHacks 2015 <3
 
 script.
-  var $voteUp = $('.up').click(function() {
-    $(this).removeClass('increment');
-    $(this).css('color', 'black');
+  var $button = $('.increment');
+  var $vote = $('.increment').click(function() {
+    $button.removeClass('button-on');
+    $button.addClass('button-off');
+    $(this).removeClass('button-off');
+    $(this).addClass('button-on');
   });
