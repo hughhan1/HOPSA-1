@@ -32,7 +32,6 @@ angular.module('hophacksApp')
   	 */    
     $scope.prettyDate = function(dateString) {
     	var date = new Date(dateString);
-
     	var month = date.getMonth();
     	var day = date.getDay();
     	var hours = date.getHours();
@@ -101,6 +100,12 @@ angular.module('hophacksApp')
     				} else {
     					userVote.vote--;
     					thing.votes--;
+    					if (thing.votes == -5) {
+    						$http.delete('/api/things/' + thing._id).success(function(data) {
+    						// Refresh the page
+    						console.log('Deleted event successfully');
+    						});
+    					}
     				}
     				userAlreadyVoted = true;
     			}
