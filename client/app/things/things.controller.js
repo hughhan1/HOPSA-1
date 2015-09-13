@@ -16,6 +16,47 @@ angular.module('hophacksApp')
       console.log('Got all the things!');
     });
 
+  	/**
+  	 * parseDate converts an ISODate String into a Date.
+  	 * @param dateString an ISODate in String format
+  	 * @return a Date representing a the ISODate String
+  	 */
+    $scope.parseDate = function(dateString) {
+    	return new Date(dateString);
+    }
+
+  	/**
+  	 * parseDate converts an ISODate String into a formatted String.
+  	 * @param dateString an ISODate in String format
+  	 * @return a String that is formatted, representing a the ISODate String
+  	 */    
+    $scope.prettyDate = function(dateString) {
+    	var date = new Date(dateString);
+
+    	var month = date.getMonth();
+    	var day = date.getDay();
+    	var hours = date.getHours();
+    	var minutes = date.getMinutes();
+    	var ampm;
+
+    	if (hours < 12) {
+    		ampm = "AM";
+    		if (hours == 0) {
+    			hours = 12;
+    		}
+    	} else {
+    		ampm = "PM"
+    		hours -= 12;
+    	}
+
+    	return month + '/' + day + ' ' + hours + ':' + minutes + ' ' + ampm;
+    }
+
+    /**
+     * Gets the URL associated with a thing object.
+     * @param thing
+     * @return a String associated with the route for a controller
+     */
     $scope.getUrl = function(thing) {
     	console.log('things/' + thing._id);
     	return 'things/' + thing._id;

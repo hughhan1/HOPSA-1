@@ -4,16 +4,20 @@ div(ng-include='"components/navbar/navbar.html"')
     tr(ng-repeat="thing in things") 
       td(align="left")
         div(class="thing-name-container")
-          a(ng-href="{{getUrl(thing)}}", class="thing-text") 
-            {{thing.name}} 
+          a(ng-href="{{ getUrl(thing) }}", class="thing-text") 
+            {{ thing.name }} 
           br
-          {{thing.desc}}
-          br
-          {{thing.startTime.getTime()}}
-          {{thing.endTime.getTime()}}
+          {{ thing.desc }}
+      td(align="right")
+        div(class="thing-time-container")
+          Begin Time: 
+          {{ prettyDate(thing.startTime) }}
+        div(class="thing-time-container")
+          End Time: 
+          {{ prettyDate(thing.endTime) }}
       td(align="right")
         div(class="count")
-          {{thing.votes}}
+          {{ thing.votes }}
       td(align="right")
         div(class="thing-votebuttons-container")
           div(ng-click="upvote(thing)", class="button-off increment up") &nbsp;
