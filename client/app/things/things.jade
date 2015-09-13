@@ -20,6 +20,8 @@ div(ng-include='"components/navbar/navbar.html"')
         div(class="thing-votebuttons-container")
           div(ng-click="upvote(thing)", class="button-off increment up") &nbsp;
           div(ng-click="downvote(thing)", class="button-off increment down") &nbsp;
+      td(align="right")
+        div(ng-if="isCreator(thing)", ng-click="delete(modalEvent)", class="delete-event") Delete
 
 footer.footer
   .container

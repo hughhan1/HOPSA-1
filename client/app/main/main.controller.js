@@ -34,14 +34,27 @@ angular.module('hophacksApp')
    }
 
     $scope.add = function(event) {
+
+      // Process event duration
+      if (!event.duration || event.duration < 30) {
+        event.duration = 30;
+      } else if (event.duration > 240) {
+        event.duration = 240;
+      }
+
+      // Get latitude and longitude
       event.latLng = {
         lat: $scope.latLng.lat(),
         lng: $scope.latLng.lng()
       };
+
+      // Populate other parameters
       event.startTime = new Date();
-      event.endTime = new Date((new Date()).getTime() + ((event.minutes || 20) * 60 * 1000)); // default 20
+      event.endTime = new Date((new Date()).getTime() + event.duration * 60 * 1000));
       event.votes = 0;
       event.user = Auth.getCurrentUser();
+
+      // Post to server
       $http.post('/api/things/', event).success(function(data) {
         event._id = data._id;
         createMarker(event)

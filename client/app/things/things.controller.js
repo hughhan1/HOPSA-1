@@ -16,6 +16,15 @@ angular.module('hophacksApp')
       console.log('Got all the things!');
     });
 
+    /**
+     * Checks if the current user is the creator of a thing.
+     * @param thing the thing to be checked
+     * @return if the current user is the creator of the thing
+     */
+    $scope.isCreator = function(thing) {
+      return thing.user._id == Auth.getCurrentUser()._id;
+    }
+
   	/**
   	 * parseDate converts an ISODate String into a Date.
   	 * @param dateString an ISODate in String format
@@ -126,7 +135,7 @@ angular.module('hophacksApp')
     }
 
     $scope.delete = function(thing) {
-    	if (thing.user == Auth.getCurrentUser()) {
+    	if (thing.user._id == Auth.getCurrentUser()._id) {
     		$http.delete('/api/things/' + thing._id).success(function(data) {
     			// Refresh the page
     			console.log('Deleted event successfully');

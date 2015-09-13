@@ -14,8 +14,10 @@ div(ng-controller='MainCtrl')
           div(class="count")
             {{ modalEvent.votes }}
         td(align="right")
-          div(ng-click='upvote(modalEvent)', class="increment up") &nbsp;
-          div(ng-click='downvote(modalEvent)', class="increment down") &nbsp;
+          div(ng-click="upvote(modalEvent)", class="increment up") &nbsp;
+          div(ng-click="downvote(modalEvent)", class="increment down") &nbsp;
+        td(align="right")
+          div(ng-click="delete(modalEvent)", class="delete-event") Delete
 
 script.
   var $button = $('.increment');
