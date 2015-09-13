@@ -50,7 +50,7 @@ angular.module('hophacksApp')
 
       // Populate other parameters
       event.startTime = new Date();
-      event.endTime = new Date((new Date()).getTime() + event.duration * 60 * 1000));
+      event.endTime = new Date((new Date()).getTime() + event.duration * 60 * 1000);
       event.votes = 0;
       event.user = Auth.getCurrentUser();
 
@@ -164,7 +164,17 @@ angular.module('hophacksApp').controller('ModalInfoCtrl', function ($http, event
   $scope.send = function () {
     $modalInstance.close($scope.modalEvent);
   };
-
+  $scope.delete = function(event) {
+    if (event.user._id == Auth.getCurrentUser()._id) {
+      $http.delete('/api/things/' + event._id).success(function(data) {
+        // Refresh the page
+        console.log('Deleted event successfully');
+      });
+    } else {
+      console.log('You are not the creator of this event.');
+    }
+    $modalInstance.close($scope.modalEvent);
+  };
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };

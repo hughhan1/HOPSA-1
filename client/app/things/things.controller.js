@@ -41,10 +41,10 @@ angular.module('hophacksApp')
   	 */    
     $scope.prettyDate = function(dateString) {
     	var date = new Date(dateString);
-    	var month = date.getMonth();
-    	var day = date.getDay();
+    	var month = date.getMonth() + 1;
+    	var day = date.getDate();
     	var hours = date.getHours();
-    	var minutes = date.getMinutes();
+    	var minutes = date.getMinutes() + "";
     	var ampm;
 
     	if (hours < 12) {
@@ -57,6 +57,9 @@ angular.module('hophacksApp')
     		hours -= 12;
     	}
 
+      while (minutes.length < 2) {
+        minutes = "0" + minutes;
+      }
     	return month + '/' + day + ' ' + hours + ':' + minutes + ' ' + ampm;
     }
 
@@ -109,10 +112,10 @@ angular.module('hophacksApp')
     				} else {
     					userVote.vote--;
     					thing.votes--;
-    					if (thing.votes == -5) {
+    					if (thing.votes <= -5) {
     						$http.delete('/api/things/' + thing._id).success(function(data) {
-    						// Refresh the page
-    						console.log('Deleted event successfully');
+    						  // Refresh the page
+    						  console.log('Deleted event successfully');
     						});
     					}
     				}
@@ -143,5 +146,11 @@ angular.module('hophacksApp')
     	} else {
     		console.log('You are not the creator of this event.');
     	}
+
+      for (var i = 0; i < $scope.things.length; ++i) {
+        if ($scope.things[i]._id === thing._id) {
+          $scope.things.splice(i--, 1);
+        }
+      }
   	}
   });

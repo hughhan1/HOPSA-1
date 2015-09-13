@@ -17,7 +17,9 @@ div(ng-controller='MainCtrl')
           div(ng-click="upvote(modalEvent)", class="increment up") &nbsp;
           div(ng-click="downvote(modalEvent)", class="increment down") &nbsp;
         td(align="right")
-          div(ng-click="delete(modalEvent)", class="delete-event") Delete
+          div(ng-if="isCreator(modalEvent)")
+            div(ng-click="delete(modalEvent)", data-type="minus", class="btn btn-danger btn-number")
+              span(class="glyphicon glyphicon-minus")
 
 script.
   var $button = $('.increment');
