@@ -23,7 +23,9 @@ angular.module('hophacksApp')
           templateUrl: 'components/modal/infomodal.html',
           windowClass: 'modal-success',
           controller: 'ModalInfoCtrl',
+          backdrop: 'static',
           size: 'sm',
+          scope:$scope,
           resolve: {
             event: function() {
               return that._id
@@ -36,7 +38,7 @@ angular.module('hophacksApp')
         })
 
         infowindow.setContent(marker.name + '\n' + marker.desc);
-        infowindow.open(map, this);
+        infowindow.open(map, this); 
       });
    }
 
@@ -110,11 +112,11 @@ angular.module('hophacksApp')
               
               console.log(google.maps.geometry.spherical.computeDistanceBetween(
               new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 
-              new google.maps.LatLng(coords.lat(), coords.lng())))
+              $scope.latLng))
 
             if (google.maps.geometry.spherical.computeDistanceBetween(
               new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 
-              new google.maps.LatLng(coords.lat(), coords.lng()))< 50) {
+              $scope.latLng) < 50) {
               
               var addModal = $modal.open({
             templateUrl: 'components/modal/modal.html',
@@ -125,6 +127,8 @@ angular.module('hophacksApp')
 
             addModal.result.then(function(data) {
             $scope.add(data)
+            
+            
             });
             }
             else {
@@ -151,6 +155,23 @@ angular.module('hophacksApp')
   if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+     /*   console.log("MAKING CIRCLE")
+        var marker = new google.maps.Marker({
+        map: map,
+        position: coords,
+        title: 'Current Location'
+        });
+
+
+        // Add circle overlay and bind to marker
+        var circle = new google.maps.Circle({
+        map: map,
+        radius: 50,    
+        fillColor: '#AA0000'
+        });
+        circle.bindTo('center', marker, 'position'); */
+
         makeMap(coords)
       }, function() {
       });
@@ -163,6 +184,7 @@ angular.module('hophacksApp').controller('ModalAddCtrl', function ($scope, $moda
   $scope.modalEvent = {};
   $scope.send = function () {
     $modalInstance.close($scope.modalEvent);
+    
   };
 
   $scope.cancel = function () {
