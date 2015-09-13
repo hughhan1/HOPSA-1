@@ -30,11 +30,15 @@
 .increment.up {
   background: #4BC35F;
   height: 50%;
+  width: 25px;
+  border-radius: 7px;
   margin-bottom: 0.25rem;
 }
 .increment.down {
   background: #C15044;
   height: 50%;
+  width: 25px;
+  border-radius: 7px;
 }
 .button-off:hover {
   opacity: 0.8;

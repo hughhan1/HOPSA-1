@@ -25,7 +25,16 @@ div(ng-controller='MainCtrl')
       tr
         td(align="left")
           div(class="count")
-            {{modalEvent.votes}}
+            {{ modalEvent.votes }}
         td(align="right")
           div(ng-click='upvote(modalEvent)', class="increment up") &nbsp;
           div(ng-click='downvote(modalEvent)', class="increment down") &nbsp;
+
+script.
+  var $button = $('.increment');
+  var $vote = $('.increment').click(function() {
+    $button.removeClass('button-on');
+    $button.addClass('button-off');
+    $(this).removeClass('button-off');
+    $(this).addClass('button-on');
+  });

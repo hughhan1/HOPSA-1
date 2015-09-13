@@ -12,7 +12,10 @@ var timeLater = function() {
 }
 
 var ThingSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
   desc: String,
   startTime: { 
     type: Date, 

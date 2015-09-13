@@ -23,7 +23,6 @@
       -ms-flex: 1 0 0;
           flex: 1 0 0;
   text-align: center;
-  opacity: .5;
   -webkit-transition: 0.3s;
           transition: 0.3s;
   cursor: pointer;
@@ -31,11 +30,25 @@
 .increment.up {
   background: #4BC35F;
   height: 50%;
+  width: 25px;
+  border-radius: 7px;
   margin-bottom: 0.25rem;
 }
 .increment.down {
   background: #C15044;
   height: 50%;
+  width: 25px;
+  border-radius: 7px;
+}
+.button-off:hover {
+  opacity: 0.8;
+}
+
+.button-on {
+  opacity: 1;
+}
+.button-off {
+  opacity: 0.5;
 }
 
 .count {

@@ -10,11 +10,9 @@ div(ng-include='"components/navbar/navbar.html"')
           {{ thing.desc }}
       td(align="right")
         div(class="thing-time-container")
-          Begin Time: 
-          {{ prettyDate(thing.startTime) }}
+          p Start: {{ prettyDate(thing.startTime) }}
         div(class="thing-time-container")
-          End Time: 
-          {{ prettyDate(thing.endTime) }}
+          p End: {{ prettyDate(thing.endTime) }}
       td(align="right")
         div(class="count")
           {{ thing.votes }}
