@@ -1,0 +1,31 @@
+div(ng-controller='MainCtrl')
+  .modal-header  
+    button.close(type='button', ng-click='$dismiss()') &times;
+    h4.modal-title(text-align="center") 
+      {{ modalEvent.name }}
+  .modal-body
+    p Hosted by {{ modalEvent.host }}
+    hr
+    p {{ modalEvent.desc }}
+  .modal-footer(ng-controller='ThingsCtrl')
+    table
+      tr
+        td(align="left")
+          div(class="count")
+            {{ modalEvent.votes }}
+        td(align="right")
+          div(ng-click="upvote(modalEvent)", class="increment up") &nbsp;
+          div(ng-click="downvote(modalEvent)", class="increment down") &nbsp;
+        td(align="right")
+          div(ng-if="isCreator(modalEvent)")
+            #minus(ng-click="delete(modalEvent)", data-type="minus", class="btn btn-danger btn-number")
+              span(class="glyphicon glyphicon-minus")
+
+script.
+  var $button = $('.increment');
+  var $vote = $('.increment').click(function() {
+    $button.removeClass('button-on');
+    $button.addClass('button-off');
+    $(this).removeClass('button-off');
+    $(this).addClass('button-on');
+  });
