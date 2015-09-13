@@ -12,6 +12,9 @@ div(ng-controller='MainCtrl')
             input(ng-model='modalEvent.name' type="text", placeholder="Event Name")
         tr
           .form-group
+            input(ng-model='modalEvent.duration' type="text", placeholder="Duration (Minutes)")
+        tr
+          .form-group
             input(ng-model='modalEvent.host' type="text", placeholder="Host(s)")
         tr
           .form-group

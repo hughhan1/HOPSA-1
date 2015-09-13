@@ -3,14 +3,6 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var timeNow = function() {
-  return new Date()
-}
-
-var timeLater = function() {
-  return new Date((new Date()).getTime() + (20 * 60 * 1000)); // 20 minutes later
-}
-
 var ThingSchema = new Schema({
   name: {
     type: String,
@@ -19,11 +11,11 @@ var ThingSchema = new Schema({
   desc: String,
   startTime: { 
     type: Date, 
-    default: timeNow()
+    default: new Date()
   },
   endTime: {
     type: Date,
-    default: timeLater()
+    default: new Date((new Date()).getTime() + (30 * 60 * 1000)) // 30 minutes later
   },
   host: String,
   latLng: Object,

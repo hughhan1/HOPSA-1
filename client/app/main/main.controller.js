@@ -8,14 +8,14 @@ angular.module('hophacksApp')
 
    function createMarker(event) {
       var marker = new google.maps.Marker({
-        position: event.latLng,
-        map: map,
-        _id: event._id,
-        name: event.name,
-        desc: event.desc,
-        host: event.host,
-        votes: 0,
-        user: Auth.getCurrentUser()
+          position: event.latLng,
+          map: map,
+          _id: event._id,
+          name: event.name,
+          host: event.host,
+          desc: event.desc,
+          votes: 0,
+          user: Auth.getCurrentUser()
       });
       marker.addListener('click', function() {
         var that = this;
@@ -33,43 +33,15 @@ angular.module('hophacksApp')
       });
    }
 
-  /*    if (google.maps.geometry.spherical.computeDistanceBetween(event.latLng, navigator.geolocation.getCurrentPosition($scope.showPosition,$scope.showError,{timeout:10000}).latLng) < 300){
-        console.log("Distance valid")
-        var marker = new google.maps.Marker({
-        position: event.latLng,
-        map: map,
-        name: event.name,
-        desc: event.desc,
-        host: event.host,
-        votes: 0,
-        user: Auth.getCurrentUser(),
-        votedUsers: []
-      });
-      marker.addListener('click', function() {
-      infowindow.setContent(marker.name + '\n' + marker.desc);
-      infowindow.open(map, this);
-      });
-      return true
-      }
-      else {
-        console.log("Distance invalid")
-        $window.alert("You must be closer to the location to create it.")
-        return false;
-      }
-   }
-   else {
-      console.log("Not logged in")
-      $window.alert("You must be logged in to create an event.")
-      return false;
-   }
-   return false
-  }*/
-
     $scope.add = function(event) {
       event.latLng = {
         lat: $scope.latLng.lat(),
         lng: $scope.latLng.lng()
       };
+      event.startTime = new Date();
+      event.endTime = new Date((new Date()).getTime() + ((event.minutes || 20) * 60 * 1000)); // default 20
+      event.votes = 0;
+      event.user = Auth.getCurrentUser();
       $http.post('/api/things/', event).success(function(data) {
         event._id = data._id;
         createMarker(event)
@@ -77,17 +49,6 @@ angular.module('hophacksApp')
       });
       markers.push(event)
     }
-      /*  $http.post('/api/things/', event).success(function(data) {
-          console.log('Posted event to mongodb successfully');
-        });
-        markers.push(event) */
-   /*   $http.post('/api/things/', event).success(function(data) {
-        event._id = data._id;
-        createMarker(event);
-        console.log(event)
-      });
-      markers.push(event)
-    }*/
   
    function makeMap(coords) {
      map = new google.maps.Map(document.getElementById('map'), {
