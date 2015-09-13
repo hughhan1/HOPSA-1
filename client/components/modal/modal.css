@@ -24,6 +24,13 @@ textarea {
   margin: 1rem;
 }
 
+.delete-event {
+  background: #C15044;
+  height: 100%;
+  width: 50px;
+  border-radius: 7px;
+}
+
 .increment {
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 0;
