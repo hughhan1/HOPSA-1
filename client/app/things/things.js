@@ -8,11 +8,11 @@ angular.module('hophacksApp')
         controller: 'MainCtrl'
       })
       .when('/things', {
-        templateUrl: 'app/things/things.html',
+        templateUrl: 'app/things/things-list.html',
         controller: 'ThingsCtrl'
       })
       .when('things/:thingId', {
-        templateUrl: 'app/things/thing.html',
+        templateUrl: 'app/things/things-view.html',
         controller: 'ThingsCtrl'
       });
   });
