@@ -9,7 +9,7 @@ module.exports = {
   DOMAIN:           'http://localhost:9000',
   SESSION_SECRET:   'hophacks-secret',
 
-  FACEBOOK_ID:      'app-id',
+  FACEBOOK_ID:      '1496578457323300',
   FACEBOOK_SECRET:  'secret',
 
   TWITTER_ID:       'app-id',
