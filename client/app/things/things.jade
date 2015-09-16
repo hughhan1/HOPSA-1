@@ -1,5 +1,6 @@
 div(ng-include='"components/navbar/navbar.html"')
 .con(ng-controller='ThingsCtrl')
+  {{ error }}
   table(class="things-container")
     tr(ng-repeat="thing in things") 
       td(align="left")

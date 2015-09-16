@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('hophacksApp')
-  .controller('ThingsCtrl', function ($rootScope, Modal, $modal, $scope, $http, Auth) {
+.controller('ThingsCtrl', function ($rootScope, Modal, $modal, $scope, $http, Auth) {
 
-		$scope.things = [];
+	$scope.things = [];
   	$http.get('/api/things/').success(function(data) {
   		data.forEach(function(thing) {
   			$scope.things.push(thing);
@@ -13,7 +13,6 @@ angular.module('hophacksApp')
 			    return 0;
   			});
   		});
-      console.log('Got all the things!');
     });
 
     /**
@@ -22,7 +21,7 @@ angular.module('hophacksApp')
      * @return if the current user is the creator of the thing
      */
     $scope.isCreator = function(thing) {
-      return thing.user._id == Auth.getCurrentUser()._id;
+        return thing.user._id == Auth.getCurrentUser()._id;
     }
 
   	/**
@@ -57,9 +56,9 @@ angular.module('hophacksApp')
     		hours -= 12;
     	}
 
-      while (minutes.length < 2) {
-        minutes = "0" + minutes;
-      }
+        while (minutes.length < 2) {
+            minutes = "0" + minutes;
+        }
     	return month + '/' + day + ' ' + hours + ':' + minutes + ' ' + ampm;
     }
 
@@ -98,7 +97,7 @@ angular.module('hophacksApp')
 	    		console.log('Upvoted event with id ' + thing._id + ' successfully');
 	    	});
     	} else {
-    		console.log("User must be logged in.");
+    		$scope.error = "Please log in to continue.";
     	}
     }
 
@@ -113,9 +112,8 @@ angular.module('hophacksApp')
     					userVote.vote--;
     					thing.votes--;
     					if (thing.votes <= -5) {
-    						$http.delete('/api/things/' + thing._id).success(function(data) {
-    						  // Refresh the page
-    						  console.log('Deleted event successfully');
+    				        $http.delete('/api/things/' + thing._id).success(function(data) {
+    						    console.log('Deleted event successfully');
     						});
     					}
     				}
@@ -133,24 +131,23 @@ angular.module('hophacksApp')
 	    		console.log('Downvoted event with id ' + thing._id + ' successfully');
 	    	});
     	} else {
-    		console.log("User must be logged in.");
+            $scope.error = "Please log in to continue.";
     	}
     }
 
     $scope.delete = function(thing) {
     	if (thing.user._id == Auth.getCurrentUser()._id) {
     		$http.delete('/api/things/' + thing._id).success(function(data) {
-    			// Refresh the page
     			console.log('Deleted event successfully');
     		});
     	} else {
     		console.log('You are not the creator of this event.');
     	}
 
-      for (var i = 0; i < $scope.things.length; ++i) {
-        if ($scope.things[i]._id === thing._id) {
-          $scope.things.splice(i--, 1);
+        for (var i = 0; i < $scope.things.length; ++i) {
+            if ($scope.things[i]._id === thing._id) {
+                $scope.things.splice(i--, 1);
+            }
         }
-      }
   	}
-  });
+});
